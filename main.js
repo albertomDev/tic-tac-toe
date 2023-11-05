@@ -29,7 +29,7 @@ const gameBoard = (() => {
     // console.log(board[index], mark);
 
     for (const eachWin of winConditions) {
-      if (eachWin.every((num) => board[num] === board[index])) {
+      if (eachWin.every((num) => board[num] === mark)) {
         console.log(true);
         break
       }

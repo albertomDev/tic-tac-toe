@@ -38,6 +38,11 @@ main {
   flex-grow: 1;
 }
 
+main h2 {
+  text-align: center;
+  margin-top: 1rem;
+}
+
 .grid {
   display: grid;
   grid-template-rows: repeat(3, 1fr);
@@ -58,9 +63,36 @@ main {
   background-color: var(--lighterPurple);
 }
 
-main h2 {
-    text-align: center;
+.square {
+  display: grid;
+  place-items: center;
+  color: var(--darkerPurple);
+  font-size: 5rem;
+  font-weight: bold;
 }
+
+.control-buttons {
+  display: grid;
+  place-items: center;
+}
+
+.reset {
+  padding: 0.5rem;
+  padding-inline: 1.5rem;
+  font-size: 2rem;
+  color: var(--darkerPurple);
+  background-color: var(--lighterPurple);
+  border: none;
+  outline: 1px solid;
+  border-radius: 2rem;
+}
+
+.reset:hover {
+  background-color: var(--darkerPurple);
+  color: var(--lighterPurple);
+}
+
+
 
 /* START FOOTER */
 footer {

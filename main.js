@@ -3,6 +3,10 @@ const square = document.querySelectorAll('.square');
 
 const gameBoard = (() => {
   const board = ['', '', '', '', '', '', '', '', ''];
+  const resetBoard = () => {
+    board.fill('')
+  }
+
   const winConditions = [
     // HORIZONTAL CONDITIONS
     [0, 1, 2],
@@ -42,7 +46,7 @@ const gameBoard = (() => {
     board[index] = mark;
   };
 
-  return { displayBoard, updateBoard, decideWinner };
+  return { displayBoard, updateBoard, decideWinner, resetBoard };
 })();
 
 const createPlayer = (mark) => {
@@ -50,22 +54,16 @@ const createPlayer = (mark) => {
 };
 
 const controlGame = (() => {
+  let gameState = document.querySelector('.game-state')
   let players = [];
   let currentPlayer = true;
 
-  
   const displayWinner = (mark) => {
-    let gameState = document.querySelector('.game-state')
-    const counter = {
-      rounds: 0,
-      playerX: 0,
-      player0: 0
-    }
     console.log(gameBoard.decideWinner(mark));
     if (gameBoard.decideWinner(mark).gameOver) {
       square.forEach((eachSquare) => {
         eachSquare.removeEventListener('click', updateHandler);
-        gameState.textContent = `Player ${mark} is the winner`
+        gameState.textContent = `🎉🎉 Player ${mark} is the winner 🎉🎉`
       });
     } else if (gameBoard.decideWinner(mark).tieGame) {
       gameState.textContent = `It's a tie`
@@ -79,18 +77,18 @@ const controlGame = (() => {
     if (currentPlayer && !cellEmpty) {
       gameBoard.updateBoard(indexClicked, players[0].mark);
       event.target.textContent = players[0].mark;
+      gameState.textContent = `Player ${players[1].mark}'s turn`
       cellEmpty = players[0].mark;
       currentPlayer = false;
       displayWinner(players[0].mark)
     } else if (!cellEmpty) {
       gameBoard.updateBoard(indexClicked, players[1].mark);
       event.target.textContent = players[1].mark;
+      gameState.textContent = `Player ${players[0].mark}'s turn`
       currentPlayer = true;
       displayWinner(players[1].mark)
     }
   };
-
-  
 
   const startGame = () => {
     players = [createPlayer('X'), createPlayer('O')];
@@ -99,6 +97,15 @@ const controlGame = (() => {
       eachSquare.addEventListener('click', updateHandler);
     });
   };
+
+  const resetGame = () => {
+    currentPlayer = true
+    gameState.textContent = `Player X's turn`
+    gameBoard.resetBoard()
+    startGame()
+  }
+
+  document.querySelector('.reset').addEventListener('click', resetGame)
 
   return { startGame };
 })();
